@@ -1,4 +1,8 @@
 import { Router } from "express";
+import {
+  handleUserRegistration,
+  validateUsername,
+} from "../controllers/authentication.js";
 
 const router = Router();
 
@@ -7,8 +11,8 @@ router.post("/login", (req, res) => {
   res.send("Successfully login!");
 });
 
-router.post("/register", (req, res) => {
-  res.send("User register successfully");
-});
+router.post("/register", handleUserRegistration);
+
+router.post("/check-username", validateUsername);
 
 export default router;
