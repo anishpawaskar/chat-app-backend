@@ -1,17 +1,15 @@
 import { Router } from "express";
 import {
-  handleUserRegistration,
+  loginController,
+  regitserController,
   validateUsername,
 } from "../controllers/authentication.js";
 
 const router = Router();
 
-router.post("/login", (req, res) => {
-  console.log("Login kar");
-  res.send("Successfully login!");
-});
+router.post("/login", loginController);
 
-router.post("/register", handleUserRegistration);
+router.post("/register", regitserController);
 
 router.post("/check-username", validateUsername);
 

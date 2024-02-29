@@ -4,34 +4,25 @@ const usersSchema = new Schema({
   email: String,
   displayName: String,
   username: String,
-  password: String,
+  hashPassword: String,
 });
 
-export const usersModel = model("users", usersSchema);
+export const UsersModel = model("users", usersSchema);
 
-export const registerUser = async (user) => {
-  try {
-    const { email, displayName, username, password } = user;
-    const newUser = new usersModel({
-      email,
-      displayName,
-      username,
-      password,
-    });
-
-    const saveUser = await newUser.save();
-    console.log("save user", saveUser);
-    return saveUser;
-  } catch (err) {
-    console.error(err);
-  }
+export const createUserModel = async (user) => {
+  const newUser = new UsersModel(user);
+  const saveUser = await newUser.save();
+  return saveUser;
 };
 
-export const checkUsernameAvailability = async (username) => {
-  try {
-    const user = await usersModel.findOne({ username: username });
-    return user;
-  } catch (err) {
-    console.error(err);
-  }
+export const getUserByUsernameModel = async (username) => {
+  return await UsersModel.findOne({ username });
+};
+
+export const getUserByEmailModel = async (email) => {
+  return await UsersModel.findOne({ email });
+};
+
+export const getUsers = async () => {
+  return await UsersModel.find({});
 };
