@@ -57,7 +57,7 @@ export const validateUsername = async (req, res) => {
   try {
     const { username } = req.body;
     const isUsernameAvailable = await getUserByUsernameModel(username);
-    if (isUsernameAvailable) {
+    if (!isUsernameAvailable) {
       return res.status(200).json({ taken: false });
     } else {
       return res.status(200).json({ taken: true });
