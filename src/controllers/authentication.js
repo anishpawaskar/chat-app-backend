@@ -71,9 +71,25 @@ export const loginController = async (req, res) => {
     };
 
     const token = generateJWT(payload);
+    console.log("token from login", token);
     res.cookie("babble-session", token, { httpOnly: true });
 
-    return res.status(200).json({ message: "User login successfully!" });
+    if (user.displayName) {
+      return res.status(200).json({
+        message: "User login successfully!",
+        userData: {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+          displayName: user.displayName,
+        },
+      });
+    }
+
+    return res.status(200).json({
+      message: "User login successfully!",
+      userData: { id: user.id, email: user.email, username: user.username },
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });
